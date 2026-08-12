@@ -1,0 +1,36 @@
+generated: '2026-08-11'
+method: generated
+source: mcp/create-wellness-mcp-tools.json
+note: >-
+  Packaged Agent Skills for Create Wellness. Grounded entirely in the 13 tool
+  names and inputSchemas read from a live tools/list response on the store's UCP
+  MCP endpoint (HTTP 200, 2026-08-11), plus the rules the store states in its
+  own robots.txt and llms.txt. No operation, field or value below was invented.
+  Create Wellness publishes no skills of its own; its llms.txt points agents at
+  Shopify's cross-store skill at https://shop.app/SKILL.md, which is Shopify's
+  artifact and not the provider's.
+provider_published_skill: null
+provider_referenced_skill: https://shop.app/SKILL.md
+skill_count: 1
+skills:
+- name: create-wellness-agentic-purchase
+  file: create-wellness-agentic-purchase.md
+  api: Create Wellness UCP Commerce MCP
+  endpoint: https://trycreate.co/api/ucp/mcp
+  summary: >-
+    Catalog search through checkout on the UCP commerce MCP surface, stopping at
+    the human-approval boundary the store requires before payment.
+  operations:
+  - search_catalog
+  - lookup_catalog
+  - get_product
+  - create_cart
+  - get_cart
+  - update_cart
+  - cancel_cart
+  - create_checkout
+  - get_checkout
+  - update_checkout
+  - complete_checkout
+  - cancel_checkout
+  - get_order

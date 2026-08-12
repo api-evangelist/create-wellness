@@ -1,0 +1,29 @@
+generated: '2026-08-11'
+method: searched
+source: https://trycreate.co/llms.txt
+plan_count: 0
+note: >-
+  Create Wellness is a direct-to-consumer supplement brand, not a software
+  vendor. Its one callable surface — the UCP commerce MCP endpoint at
+  https://trycreate.co/api/ucp/mcp — is anonymous, free, and has no plans, no
+  tiers, no metering and no signup. There is nothing to buy in order to call it,
+  which is why plan_count is 0 rather than omitted: this is a published absence,
+  not an unchecked field.
+plans: []
+api_access:
+  model: free-anonymous
+  signup_required: false
+  credential_required: false
+  metering: none-published
+  see: rate-limits/create-wellness-rate-limits.yml
+commercial_surface:
+  kind: retail-product-pricing
+  note: >-
+    The prices this company publishes are consumer product prices — gummies,
+    bundles and subscriptions — not API plans. They are machine-readable at
+    https://trycreate.co/products.json (HTTP 200, 2026-08-11) and through the
+    search_catalog MCP tool. They are recorded here as context and deliberately
+    NOT wired as an API `Pricing` pointer, because pricing a box of creatine is
+    not pricing an API.
+  product_catalog: https://trycreate.co/products.json
+  subscription_offered: true

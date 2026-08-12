@@ -1,23 +1,131 @@
 aid: create-wellness
 name: Create Wellness
-description: 'Create Wellness is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Create Wellness is a New York based direct-to-consumer supplement brand,
+  founded in 2022, that makes creatine monohydrate gummies and drink mixes — NSF Certified
+  for Sport, vegan, gluten-free and non-GMO — sold through its own Shopify storefront
+  at trycreate.co and through Amazon, Target, Walmart, GNC and The Vitamin Shoppe.
+  It is not a software company and publishes no developer programme, but its storefront
+  serves a live, anonymous agent-commerce surface: a Universal Commerce Protocol
+  endpoint exposed over the Model Context Protocol at /api/ucp/mcp with thirteen
+  catalog, cart, checkout and order tools, advertised from the store''s own robots.txt,
+  llms.txt and agents.md, and governed by a stated human-approval-before-payment rule.'
+image: https://cdn.shopify.com/s/files/1/0611/9204/4732/files/Create_Wellness_Logo.png?v=1733357143
 url: https://raw.githubusercontent.com/api-evangelist/create-wellness/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-11'
 modified: '2026-08-11'
 tags:
 - Company
-apis: []
+- Health and Wellness
+- Supplements
+- Consumer Products
+- E-Commerce
+- Direct to Consumer
+- Agentic Commerce
+- MCP
+- Shopify
+- Nutrition
+apis:
+- name: Create Wellness UCP Commerce MCP
+  description: 'The Universal Commerce Protocol endpoint served from the Create Wellness
+    storefront, exposed over the Model Context Protocol. Thirteen tools cover catalog
+    search and lookup, cart create/read/update/cancel, checkout create/read/update/complete/cancel,
+    and order retrieval. It answers anonymously — no API key, no OAuth challenge —
+    with each tool requiring only a self-asserted agent profile URI in meta. Prices
+    are integers in ISO 4217 minor units. Only complete_checkout requires an idempotency
+    key, and the store states that payment must never be finalized without explicit,
+    contemporaneous human approval. The surface is Shopify platform infrastructure
+    rather than something the brand authored, but it is served from the brand''s own
+    host and advertised from the brand''s own agent instructions.'
+  humanURL: https://trycreate.co/agents.md
+  baseURL: https://trycreate.co/api/ucp/mcp
+  tags:
+  - Agentic Commerce
+  - MCP
+  - E-Commerce
+  - Catalog
+  - Checkout
+  properties:
+  - type: MCPServer
+    url: mcp/create-wellness-mcp.yml
+  - type: Authentication
+    url: authentication/create-wellness-authentication.yml
+  - type: OAuthScopes
+    url: scopes/create-wellness-scopes.yml
+  - type: Conventions
+    url: conventions/create-wellness-conventions.yml
+  - type: Idempotency
+    url: conventions/create-wellness-conventions.yml
+  - type: RateLimits
+    url: rate-limits/create-wellness-rate-limits.yml
+  - type: Plans
+    url: plans/create-wellness-plans-pricing.yml
+x-enrichment:
+  date: '2026-08-11'
+  status: enriched
+  artifacts_added: 17
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: agent-surface-live
+  detail: >-
+    trycreate.co serves a live anonymous UCP commerce MCP endpoint whose
+    tools/list returned 13 tools with full JSON Schema inputs, plus llms.txt,
+    agents.md and four /.well-known/ documents — no OpenAPI exists on any host
+    probed.
+  evidence:
+  - url: https://trycreate.co/api/ucp/mcp
+    status: 200
+  - url: https://trycreate.co/llms.txt
+    status: 200
+  - url: https://trycreate.co/.well-known/ucp
+    status: 200
+  - url: https://trycreate.co/openapi.json
+    status: 404
+  checked: '2026-08-11'
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/create-wellness-domain-security.yml
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://trycreate.co
+- type: Documentation
+  url: https://trycreate.co/agents.md
+- type: LLMsTxt
+  url: llms/create-wellness-llms.txt
+- type: MCPServer
+  url: mcp/create-wellness-mcp.yml
+- type: WellKnown
+  url: well-known/create-wellness-well-known.yml
+- type: Authentication
+  url: authentication/create-wellness-authentication.yml
+- type: OAuthScopes
+  url: scopes/create-wellness-scopes.yml
+- type: Conventions
+  url: conventions/create-wellness-conventions.yml
+- type: Idempotency
+  url: conventions/create-wellness-conventions.yml
+- type: RateLimits
+  url: rate-limits/create-wellness-rate-limits.yml
+- type: Plans
+  url: plans/create-wellness-plans-pricing.yml
+- type: Conformance
+  url: conformance/create-wellness-conformance.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Support
+  url: https://trycreate.co/pages/faq
+- type: BlogRSS
+  url: https://trycreate.co/blogs/news.atom
+- type: Login
+  url: https://trycreate.co/account/login
+- type: TermsOfService
+  url: https://trycreate.co/policies/terms-of-service
+- type: PrivacyPolicy
+  url: https://trycreate.co/policies/privacy-policy

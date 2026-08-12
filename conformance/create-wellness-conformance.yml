@@ -1,0 +1,119 @@
+generated: '2026-08-11'
+method: probed
+source: https://trycreate.co/.well-known/ucp
+note: >-
+  Standards conformance asserted only where a document served from trycreate.co
+  proves it. Everything below carries the URL that was fetched and the status it
+  returned on 2026-08-11. Where the conformance belongs to the Shopify platform
+  rather than to anything Create Wellness authored, that is said in the
+  evidence.
+standards:
+- id: ucp
+  name: Universal Commerce Protocol
+  version: '2026-04-08'
+  conforms: true
+  evidence: >-
+    /.well-known/ucp returns 200 with a UCP merchant profile declaring
+    supported_versions 2026-04-08 and 2026-01-23, the dev.ucp.shopping service
+    over MCP transport, and seven declared capabilities. Platform-provided by
+    Shopify.
+  url: https://trycreate.co/.well-known/ucp
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    POST /api/ucp/mcp with method tools/list returned 200 and a valid JSON-RPC
+    2.0 result containing 13 tools, each with a draft 2020-12 inputSchema.
+  url: https://trycreate.co/api/ucp/mcp
+- id: json-schema
+  name: JSON Schema 2020-12
+  conforms: true
+  evidence: >-
+    Every one of the 13 MCP tool inputSchemas declares
+    $schema https://json-schema.org/draft/2020-12/schema.
+  url: https://trycreate.co/api/ucp/mcp
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: >-
+    /.well-known/openid-configuration returns 200 with issuer, authorization,
+    token, jwks and end_session endpoints, RS256 id tokens and S256 PKCE. The
+    issuer is Shopify's, not the brand's.
+  url: https://trycreate.co/.well-known/openid-configuration
+- id: oauth2
+  name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-authorization-server returns 200 with the same metadata
+    document as the OIDC discovery endpoint.
+  url: https://trycreate.co/.well-known/oauth-authorization-server
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-protected-resource returns 200 naming resource
+    https://trycreate.co, its authorization server, and bearer_methods_supported
+    [header].
+  url: https://trycreate.co/.well-known/oauth-protected-resource
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: >-
+    /llms.txt returns 200 as text/markdown with real agent operating
+    instructions, mirrored at /agents.md and cross-referenced from robots.txt
+    and a dedicated sitemap_agentic_discovery.xml.
+  url: https://trycreate.co/llms.txt
+- id: iso4217
+  name: ISO 4217 minor-unit money representation
+  conforms: true
+  evidence: >-
+    All 13 tool descriptions state prices are integers in ISO 4217 minor units
+    paired with a currency code, including the zero-decimal caveat.
+  url: https://trycreate.co/api/ucp/mcp
+- id: idempotency
+  name: Idempotent write semantics
+  conforms: partial
+  evidence: >-
+    meta.idempotency-key is required on complete_checkout and on no other tool.
+    Cart and checkout creation are not idempotent.
+  url: https://trycreate.co/api/ucp/mcp
+- id: rfc9116
+  name: security.txt (RFC 9116)
+  conforms: false
+  evidence: https://trycreate.co/.well-known/security.txt returned 404.
+  url: https://trycreate.co/.well-known/security.txt
+- id: rfc9457
+  name: Problem Details for HTTP APIs (RFC 9457)
+  conforms: false
+  evidence: >-
+    No problem+json usage and no published error catalog. Errors are returned
+    inside the JSON-RPC envelope with no documented type registry.
+- id: rfc8594
+  name: Sunset / Deprecation headers (RFC 8594)
+  conforms: false
+  evidence: >-
+    No deprecation or sunset policy is published on the provider surface; the
+    only versioning is the UCP protocol version negotiated by the platform.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: >-
+    /openapi.json, /swagger.json, /api-docs, /docs and /graphql all returned 404
+    on the brand host. The UCP capability documents reference OpenRPC schemas
+    hosted at ucp.dev, not an OpenAPI on the provider's host.
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json both returned 404
+    with the Shopify HTML error page.
+product_certifications:
+  note: >-
+    Create Wellness publishes product certifications (NSF Certified for Sport,
+    non-GMO, vegan, third-party testing) at
+    https://trycreate.co/pages/testing-certifications. These are supplement
+    manufacturing certifications, not information-security or API compliance
+    programmes, and are recorded here as context only. They deliberately do NOT
+    earn a `Compliance` pointer.
+  page: https://trycreate.co/pages/testing-certifications
+  status: 200

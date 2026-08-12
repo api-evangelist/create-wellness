@@ -1,0 +1,38 @@
+generated: '2026-08-11'
+method: probed
+source: https://trycreate.co/.well-known/openid-configuration
+note: >-
+  Read verbatim from the scopes_supported array of the OpenID Connect discovery
+  document served at trycreate.co. These are Shopify Customer Accounts scopes
+  exposed on the brand host; Create Wellness publishes no scope reference page
+  of its own, so descriptions below are marked with their source rather than
+  quoted from brand documentation.
+authorization_server: https://shopify.com/authentication/61192044732
+docs: null
+docs_note: >-
+  No scopes/permissions reference page exists on trycreate.co. The upstream
+  platform reference is https://shopify.dev/docs/api/customer — that is
+  Shopify's documentation, not the provider's, and is recorded here as context
+  only.
+scope_count: 4
+scopes:
+- name: openid
+  description: Standard OpenID Connect scope requesting an ID token.
+  source: openid-configuration scopes_supported
+  standard: true
+- name: email
+  description: Standard OpenID Connect scope releasing the email and email_verified claims.
+  source: openid-configuration scopes_supported
+  standard: true
+- name: customer-account-api:full
+  description: >-
+    Full access to the Shopify Customer Account API on behalf of the signed-in
+    buyer. Not described anywhere on the provider's own surface.
+  source: openid-configuration scopes_supported
+  standard: false
+- name: customer-account-mcp-api:full
+  description: >-
+    Full access to the Shopify Customer Account MCP API on behalf of the signed-in
+    buyer. Not described anywhere on the provider's own surface.
+  source: openid-configuration scopes_supported
+  standard: false

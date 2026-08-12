@@ -1,0 +1,115 @@
+generated: '2026-08-11'
+method: probed
+source: https://trycreate.co/api/ucp/mcp
+name: Create Wellness UCP Commerce MCP
+status: live
+transport: streamable-http
+protocol:
+  name: Universal Commerce Protocol
+  spec: https://ucp.dev
+  version: '2026-04-08'
+  supported_versions:
+  - '2026-04-08'
+  - '2026-01-23'
+endpoints:
+- url: https://trycreate.co/api/ucp/mcp
+  advertised_in: https://trycreate.co/llms.txt
+  verified: true
+  http_status: 200
+- url: https://trycreate-808.myshopify.com/api/ucp/mcp
+  advertised_in: https://trycreate.co/.well-known/ucp
+  verified: false
+  note: >-
+    The UCP discovery document names the myshopify.com host as the canonical
+    service endpoint while llms.txt/robots.txt/agents.md advertise the brand
+    host. The brand host was the one probed and it answered.
+discovery:
+- https://trycreate.co/.well-known/ucp
+- https://trycreate.co/llms.txt
+- https://trycreate.co/agents.md
+- https://trycreate.co/robots.txt
+authentication:
+  anonymous: true
+  note: >-
+    tools/list answered anonymously — no OAuth challenge, no bearer token. Every
+    tool requires meta["ucp-agent"].profile (an agent profile URI) as its only
+    identity input. Buyer identity for order lookup rides Shopify Customer
+    Accounts OIDC (see authentication/create-wellness-authentication.yml).
+x-evidence:
+  fetched: '2026-08-11'
+  method: POST
+  url: https://trycreate.co/api/ucp/mcp
+  request: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 200
+  content_type: application/json
+  response_bytes: 47909
+  saved_to: mcp/create-wellness-mcp-tools.json
+tool_count: 13
+tools:
+- name: search_catalog
+  category: catalog
+  description: Natural-language and/or filtered product search over the store catalog. Cursor-paginated.
+- name: lookup_catalog
+  category: catalog
+  description: Look up specific catalog entries.
+- name: get_product
+  category: catalog
+  description: Retrieve a single product.
+- name: create_cart
+  category: cart
+  description: Create a cart with line items, buyer contact, and localization context hints.
+- name: get_cart
+  category: cart
+  description: Retrieve a cart by id.
+- name: update_cart
+  category: cart
+  description: Update line items / buyer / context on an existing cart.
+- name: cancel_cart
+  category: cart
+  description: Cancel a cart.
+- name: create_checkout
+  category: checkout
+  description: Create a checkout; returns line items, totals, discounts and taxes.
+- name: get_checkout
+  category: checkout
+  description: Retrieve a checkout by id (gid://shopify/Checkout/...).
+- name: update_checkout
+  category: checkout
+  description: Set shipping address, fulfillment method, discounts on a checkout.
+- name: complete_checkout
+  category: checkout
+  description: >-
+    Finalize the purchase. REQUIRES meta["idempotency-key"] — the only tool of
+    the thirteen that does. Returns order id and thank-you-page URL, or errors.
+- name: cancel_checkout
+  category: checkout
+  description: Cancel a checkout.
+- name: get_order
+  category: order
+  description: Retrieve an order by id.
+capabilities_declared:
+- dev.ucp.shopping.catalog.search
+- dev.ucp.shopping.catalog.lookup
+- dev.ucp.shopping.cart
+- dev.ucp.shopping.checkout
+- dev.ucp.shopping.fulfillment
+- dev.ucp.shopping.discount
+- dev.ucp.shopping.order
+- dev.shopify.catalog
+payment_handlers:
+- com.google.pay
+- dev.shopify.card
+- dev.shopify.shop_pay
+constraints:
+- >-
+  Checkout requires contemporaneous human approval — robots.txt and llms.txt
+  both state agents must not complete payment without explicit buyer consent.
+- The MCP endpoint is rate-limited per IP; agents are told to back off on 429.
+- >-
+  All prices are integers in ISO 4217 minor units paired with a currency code
+  ({"amount":600,"currency":"USD"} is $6.00).
+provenance_note: >-
+  This MCP server is provided by the Shopify platform, not authored by Create
+  Wellness. It is nonetheless served from the brand's own host and advertised
+  from the brand's own robots.txt, llms.txt and agents.md, so it is a real,
+  callable agent surface on trycreate.co.

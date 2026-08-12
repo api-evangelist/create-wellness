@@ -1,0 +1,58 @@
+generated: '2026-08-11'
+method: searched
+source: https://trycreate.co/llms.txt
+limit_count: 0
+note: >-
+  Create Wellness states that a rate limit exists but publishes no number. The
+  full text is: "Respect rate limits. The MCP endpoint is rate-limited per IP.
+  Back off on 429 responses." That is a scope (per-IP), a status code (429) and
+  a required client behaviour (back off) with no quota, no window, no burst, and
+  no named response headers. limit_count is therefore 0 — zero enumerable
+  limits — even though a limiting policy is acknowledged.
+limits: []
+qualitative:
+- scope: per-ip
+  surface: https://trycreate.co/api/ucp/mcp
+  window: not published
+  limit: null
+  burst: null
+  exhaustion_status: 429
+  source: https://trycreate.co/llms.txt
+headers:
+  published: []
+  observed:
+  - name: shopify-complexity-score
+    example_value: '410'
+    method: probed
+    note: >-
+      A per-request query-cost score returned on the tools/list response. It is
+      the closest thing to a budget signal this surface emits, but no ceiling,
+      window or remaining-balance header accompanies it, so an agent can read
+      what a call cost and still not know what it has left.
+  - name: shopify-complexity-score-v2
+    example_value: '41'
+    method: probed
+  - name: x-shopify-ucp-mcp-api-version
+    example_value: '2026-04-08'
+    method: probed
+    note: Confirms the negotiated UCP protocol version on every response.
+  - name: x-request-id
+    method: probed
+    note: Per-request identifier, usable as a support correlation id.
+  absent:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - RateLimit
+  - RateLimit-Policy
+  - Retry-After
+  note: >-
+    Observed on a live anonymous POST tools/list (HTTP 200, 2026-08-11). No
+    standard rate-limit header family is present and no Retry-After guidance is
+    published beyond "back off".
+gaps:
+- >-
+  An agent cannot budget against this API. It is told a per-IP limit exists and
+  is handed a per-call complexity score, but no quota, no window, no remaining
+  balance, and no Retry-After — so it learns it is over the line only by being
+  refused.

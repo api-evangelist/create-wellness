@@ -1,0 +1,123 @@
+generated: '2026-08-11'
+method: derived
+source: mcp/create-wellness-mcp-tools.json
+also_from:
+- https://trycreate.co/llms.txt
+- https://trycreate.co/robots.txt
+- https://trycreate.co/.well-known/ucp
+note: >-
+  Cross-cutting runtime semantics for the one callable surface Create Wellness
+  serves: the UCP commerce MCP endpoint. Every rule below was read out of the
+  live tools/list inputSchemas or off the store's own agent instructions —
+  nothing here is inferred from the UCP specification alone.
+authentication:
+  style: none-anonymous
+  agent_identity: meta["ucp-agent"].profile (URI, required on all 13 tools)
+  buyer_identity: Shopify Customer Accounts OIDC
+  see: authentication/create-wellness-authentication.yml
+idempotency:
+  supported: true
+  mechanism: request-field
+  field: meta["idempotency-key"]
+  type: string
+  required: true
+  scope: complete_checkout only
+  coverage: 1 of 13 tools
+  evidence: >-
+    complete_checkout declares meta.idempotency-key in its inputSchema and lists
+    it in meta.required alongside ucp-agent. No other tool accepts or requires
+    one — create_cart, create_checkout and update_checkout are all
+    non-idempotent by contract.
+  retention: not published
+  conflict_behaviour: not published
+  note: >-
+    The single most consequential call — the one that charges a buyer — is the
+    only one protected. That is the right place to put it and the wrong place to
+    stop: a retried create_checkout after a timeout will create a second
+    checkout with no way for the agent to detect the duplicate.
+pagination:
+  style: cursor
+  applies_to:
+  - search_catalog
+  request_field: catalog.pagination.cursor
+  response_field: pagination.cursor
+  default_page_size: not published
+  max_page_size: not published
+  evidence: >-
+    "Results are paginated, with initial results limited to improve experience.
+    Use the pagination.cursor from the response to fetch additional pages"
+    (search_catalog description).
+money:
+  representation: integer-minor-units
+  shape: '{"amount": <int>, "currency": "<ISO 4217>"}'
+  example: '{"amount": 600, "currency": "USD"} is $6.00'
+  note: >-
+    Stated identically in all 13 tool descriptions, including the zero-decimal
+    caveat for JPY. This is unusually explicit and removes the most common
+    class of agent pricing error.
+localization:
+  request_field: context
+  hints:
+  - address_country
+  - address_region
+  - postal_code
+  - language
+  - currency
+  - intent
+  semantics: >-
+    "Provisional context hints for localization and pricing. Used when
+    authoritative data (e.g. shipping address) is missing; higher-resolution
+    data supersedes these values and unsupported hints may be ignored without
+    error."
+platform_signals:
+  fields:
+  - dev.ucp.buyer_ip
+  - dev.ucp.user_agent
+  applies_to:
+  - search_catalog
+identifiers:
+  format: Shopify global IDs
+  example: gid://shopify/Checkout/abc123
+  note: Checkout, cart, order and product-variant ids are all Shopify GIDs.
+versioning:
+  style: protocol-version
+  current: '2026-04-08'
+  supported:
+  - '2026-04-08'
+  - '2026-01-23'
+  discovery: https://trycreate.co/.well-known/ucp
+  note: >-
+    Versioning is the UCP protocol's, not the merchant's. Create Wellness
+    publishes no version or deprecation policy of its own.
+errors:
+  envelope: JSON-RPC 2.0 error object
+  catalog_published: false
+  note: >-
+    complete_checkout is documented as returning "any errors encountered" inline
+    with the checkout result. No error-code registry, problem-type catalog, or
+    RFC 9457 usage is published on the provider surface.
+rate_limits:
+  signalled: qualitatively
+  see: rate-limits/create-wellness-rate-limits.yml
+request_tracing:
+  request_id_header: x-request-id
+  method: probed
+  documented: false
+  note: >-
+    The MCP endpoint returns x-request-id (and a server-timing header carrying a
+    requestID) on every response, observed live 2026-08-11. It is emitted but
+    never documented, so no agent is told to capture it.
+response_headers_observed:
+- x-shopify-ucp-mcp-api-version
+- shopify-complexity-score
+- shopify-complexity-score-v2
+- x-request-id
+- server-timing
+human_in_the_loop:
+  rule: >-
+    Checkout, payment and order placement must not be completed by an agent
+    without explicit, contemporaneous human approval.
+  stated_in:
+  - https://trycreate.co/robots.txt
+  - https://trycreate.co/llms.txt
+  enforcement: policy-stated; not observable from the tool schemas

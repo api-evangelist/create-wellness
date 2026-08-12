@@ -1,0 +1,85 @@
+generated: '2026-08-11'
+method: probed
+source: https://trycreate.co/.well-known/openid-configuration
+docs: https://trycreate.co/llms.txt
+note: >-
+  Derived from the live /.well-known/ documents served on trycreate.co plus the
+  observed behaviour of the UCP MCP endpoint. There is no OpenAPI to derive
+  securitySchemes from; every statement below was read off a document that
+  returned 200 on 2026-08-11.
+surfaces:
+- surface: UCP Commerce MCP
+  url: https://trycreate.co/api/ucp/mcp
+  scheme: none
+  anonymous: true
+  evidence: >-
+    POST tools/list with no Authorization header returned 200 and the full
+    13-tool manifest. No WWW-Authenticate challenge, no invalid_token error.
+  identity_input:
+    field: meta["ucp-agent"].profile
+    type: uri
+    required: true
+    description: >-
+      Every tool requires an agent profile URI in meta. This is agent
+      self-identification for UCP discovery, not authentication — it is not
+      verified against any credential.
+  human_in_the_loop:
+    required_for: complete_checkout
+    statement: >-
+      "Checkout requires human approval. Agents must not complete payment
+      without explicit buyer consent." (llms.txt / robots.txt)
+- surface: Shopify Customer Accounts
+  scheme: openIdConnect
+  type: oauth2
+  issuer: https://shopify.com/authentication/61192044732
+  discovery: https://trycreate.co/.well-known/openid-configuration
+  authorization_endpoint: https://shopify.com/authentication/61192044732/oauth/authorize
+  token_endpoint: https://shopify.com/authentication/61192044732/oauth/token
+  jwks_uri: https://shopify.com/authentication/61192044732/.well-known/jwks.json
+  end_session_endpoint: https://shopify.com/authentication/61192044732/logout
+  grant_types:
+  - authorization_code
+  - refresh_token
+  - urn:ietf:params:oauth:grant-type:jwt-bearer
+  response_types:
+  - code
+  pkce:
+    supported: true
+    code_challenge_methods:
+    - S256
+  token_endpoint_auth_methods:
+  - client_secret_basic
+  id_token_signing_alg:
+  - RS256
+  claims:
+  - iss
+  - sub
+  - aud
+  - exp
+  - iat
+  - nonce
+  - sid
+  - email
+  - email_verified
+  scopes:
+  - openid
+  - email
+  - customer-account-api:full
+  - customer-account-mcp-api:full
+  human_login: https://trycreate.co/account/login
+protected_resource:
+  source: https://trycreate.co/.well-known/oauth-protected-resource
+  resource: https://trycreate.co
+  authorization_servers:
+  - https://shopify.com/authentication/61192044732
+  bearer_methods_supported:
+  - header
+gaps:
+- >-
+  The authorization server is Shopify's, not Create Wellness's — a buyer
+  authenticating against this store is authenticating against
+  shopify.com/authentication/61192044732. There is no brand-operated IdP.
+- >-
+  No published API key programme, no partner/developer credential, and no
+  developer documentation of any kind on the brand host. The only auth
+  documentation is the platform-generated llms.txt.

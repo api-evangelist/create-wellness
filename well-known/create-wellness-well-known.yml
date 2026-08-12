@@ -1,0 +1,85 @@
+generated: '2026-08-11'
+method: probed
+source: https://trycreate.co/.well-known/
+host: trycreate.co
+note: >-
+  Create Wellness runs its storefront on Shopify, and the /.well-known/ surface
+  it serves is the Shopify platform default rather than anything the brand
+  authored. Four paths return real machine-readable documents (UCP merchant
+  profile, OpenID Connect discovery, OAuth 2.0 authorization-server metadata,
+  and OAuth 2.0 protected-resource metadata). security.txt, api-catalog and
+  ai-plugin.json all 404. The 404 bodies are the Shopify HTML error page, so
+  every miss below is a genuine 404 and not a soft-200 SPA catch-all.
+probes:
+- path: /.well-known/ucp
+  url: https://trycreate.co/.well-known/ucp
+  status: 200
+  content_type: application/json
+  file: create-wellness-ucp.json
+  hit: true
+  note: >-
+    Universal Commerce Protocol merchant profile. Declares protocol version
+    2026-04-08 (and 2026-01-23), the dev.ucp.shopping service over MCP
+    transport, capabilities for cart/checkout/fulfillment/discount/order and
+    catalog search+lookup, plus payment handlers (Google Pay, Shopify card,
+    Shop Pay). Names the canonical service endpoint as
+    https://trycreate-808.myshopify.com/api/ucp/mcp, while llms.txt advertises
+    https://trycreate.co/api/ucp/mcp — both answer.
+- path: /.well-known/openid-configuration
+  url: https://trycreate.co/.well-known/openid-configuration
+  status: 200
+  content_type: application/json
+  file: create-wellness-openid-configuration.json
+  hit: true
+  note: >-
+    Shopify Customer Accounts OIDC discovery. Issuer
+    https://shopify.com/authentication/61192044732, authorization_code +
+    refresh_token + jwt-bearer grants, PKCE S256, RS256 id tokens.
+- path: /.well-known/oauth-authorization-server
+  url: https://trycreate.co/.well-known/oauth-authorization-server
+  status: 200
+  content_type: application/json
+  file: create-wellness-oauth-authorization-server.json
+  hit: true
+  note: Byte-identical to the openid-configuration document (RFC 8414 alias).
+- path: /.well-known/oauth-protected-resource
+  url: https://trycreate.co/.well-known/oauth-protected-resource
+  status: 200
+  content_type: application/json
+  file: create-wellness-oauth-protected-resource.json
+  hit: true
+  note: >-
+    RFC 9728 protected-resource metadata. resource https://trycreate.co,
+    authorization_servers [https://shopify.com/authentication/61192044732],
+    bearer_methods_supported [header].
+- path: /.well-known/security.txt
+  url: https://trycreate.co/.well-known/security.txt
+  status: 404
+  content_type: text/html
+  hit: false
+- path: /.well-known/api-catalog
+  url: https://trycreate.co/.well-known/api-catalog
+  status: 404
+  content_type: text/html
+  hit: false
+- path: /.well-known/ai-plugin.json
+  url: https://trycreate.co/.well-known/ai-plugin.json
+  status: 404
+  content_type: text/html
+  hit: false
+- path: /.well-known/agent-card.json
+  url: https://trycreate.co/.well-known/agent-card.json
+  status: 404
+  content_type: text/html
+  hit: false
+- path: /.well-known/agent.json
+  url: https://trycreate.co/.well-known/agent.json
+  status: 404
+  content_type: text/html
+  hit: false
+summary:
+  probed: 9
+  hits: 4
+  security_txt: false
+  api_catalog: false
+  agent_card: false
