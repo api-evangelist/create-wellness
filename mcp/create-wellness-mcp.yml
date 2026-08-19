@@ -19,10 +19,8 @@ endpoints:
 - url: https://trycreate-808.myshopify.com/api/ucp/mcp
   advertised_in: https://trycreate.co/.well-known/ucp
   verified: false
-  note: >-
-    The UCP discovery document names the myshopify.com host as the canonical
-    service endpoint while llms.txt/robots.txt/agents.md advertise the brand
-    host. The brand host was the one probed and it answered.
+  note: The UCP discovery document names the myshopify.com host as the canonical service endpoint while
+    llms.txt/robots.txt/agents.md advertise the brand host. The brand host was the one probed and it answered.
 discovery:
 - https://trycreate.co/.well-known/ucp
 - https://trycreate.co/llms.txt
@@ -30,10 +28,8 @@ discovery:
 - https://trycreate.co/robots.txt
 authentication:
   anonymous: true
-  note: >-
-    tools/list answered anonymously — no OAuth challenge, no bearer token. Every
-    tool requires meta["ucp-agent"].profile (an agent profile URI) as its only
-    identity input. Buyer identity for order lookup rides Shopify Customer
+  note: tools/list answered anonymously — no OAuth challenge, no bearer token. Every tool requires meta["ucp-agent"].profile
+    (an agent profile URI) as its only identity input. Buyer identity for order lookup rides Shopify Customer
     Accounts OIDC (see authentication/create-wellness-authentication.yml).
 x-evidence:
   fetched: '2026-08-11'
@@ -78,9 +74,8 @@ tools:
   description: Set shipping address, fulfillment method, discounts on a checkout.
 - name: complete_checkout
   category: checkout
-  description: >-
-    Finalize the purchase. REQUIRES meta["idempotency-key"] — the only tool of
-    the thirteen that does. Returns order id and thank-you-page URL, or errors.
+  description: Finalize the purchase. REQUIRES meta["idempotency-key"] — the only tool of the thirteen
+    that does. Returns order id and thank-you-page URL, or errors.
 - name: cancel_checkout
   category: checkout
   description: Cancel a checkout.
@@ -101,15 +96,17 @@ payment_handlers:
 - dev.shopify.card
 - dev.shopify.shop_pay
 constraints:
-- >-
-  Checkout requires contemporaneous human approval — robots.txt and llms.txt
-  both state agents must not complete payment without explicit buyer consent.
+- Checkout requires contemporaneous human approval — robots.txt and llms.txt both state agents must not
+  complete payment without explicit buyer consent.
 - The MCP endpoint is rate-limited per IP; agents are told to back off on 429.
-- >-
-  All prices are integers in ISO 4217 minor units paired with a currency code
-  ({"amount":600,"currency":"USD"} is $6.00).
-provenance_note: >-
-  This MCP server is provided by the Shopify platform, not authored by Create
-  Wellness. It is nonetheless served from the brand's own host and advertised
-  from the brand's own robots.txt, llms.txt and agents.md, so it is a real,
-  callable agent surface on trycreate.co.
+- All prices are integers in ISO 4217 minor units paired with a currency code ({"amount":600,"currency":"USD"}
+  is $6.00).
+provenance_note: This MCP server is provided by the Shopify platform, not authored by Create Wellness.
+  It is nonetheless served from the brand's own host and advertised from the brand's own robots.txt, llms.txt
+  and agents.md, so it is a real, callable agent surface on trycreate.co.
+deployment:
+  mode: remote
+  verified: searched
+  tools: 13
+  checked: '2026-08-12'
+  source: catalog MCP census
