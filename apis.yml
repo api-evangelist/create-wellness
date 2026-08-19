@@ -13,7 +13,7 @@ image: https://cdn.shopify.com/s/files/1/0611/9204/4732/files/Create_Wellness_Lo
 url: https://raw.githubusercontent.com/api-evangelist/create-wellness/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-11'
 modified: '2026-08-11'
 tags:
