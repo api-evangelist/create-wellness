@@ -9,6 +9,17 @@ description: 'Create Wellness is a New York based direct-to-consumer supplement 
   endpoint exposed over the Model Context Protocol at /api/ucp/mcp with thirteen
   catalog, cart, checkout and order tools, advertised from the store''s own robots.txt,
   llms.txt and agents.md, and governed by a stated human-approval-before-payment rule.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.shopify.com/s/files/1/0611/9204/4732/files/Create_Wellness_Logo.png?v=1733357143
 url: https://raw.githubusercontent.com/api-evangelist/create-wellness/refs/heads/main/apis.yml
 x-type: company
