@@ -88,6 +88,9 @@ apis:
     url: rate-limits/create-wellness-rate-limits.yml
   - type: Plans
     url: plans/create-wellness-plans-pricing.yml
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 x-enrichment:
   date: '2026-08-11'
   status: enriched
