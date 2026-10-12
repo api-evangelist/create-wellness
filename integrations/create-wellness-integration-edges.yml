@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/create-wellness/integrations
+- https://n8n.io/integrations/create-wellness/
+- https://composio.dev/toolkits/create-wellness
+- https://monid.ai/tools/create-wellness
+checked:
+- https://composio.dev/toolkits/create-wellness
+- https://monid.ai/tools/create-wellness
+- https://n8n.io/integrations/create-wellness/
+- https://zapier.com/apps/create-wellness/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
