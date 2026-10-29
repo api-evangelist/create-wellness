@@ -64,5 +64,112 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Create Wellness is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+Create Wellness is a New York based direct-to-consumer supplement brand, founded in 2022, that makes creatine monohydrate gummies and drink mixes — NSF Certified for Sport, vegan, gluten-free and non-GMO — sold through its own Shopify storefront at trycreate.co and through Amazon, Target, Walmart, GNC and The Vitamin Shoppe. It is not a software company and publishes no developer programme, but its storefront serves a live, anonymous agent-commerce surface: a Universal Commerce Protocol endpoint exposed over the Model Context Protocol at /api/ucp/mcp with thirteen catalog, cart, checkout and order tools, advertised from the store's own robots.txt, llms.txt and agents.md, and governed by a stated human-approval-before-payment rule.
+
+**Areas:** Company · Health and Wellness · Supplements · Consumer Products · E-Commerce · Direct to Consumer · Agentic Commerce · MCP · Shopify · Nutrition
+
+## Create Wellness on APIs.io
+
+Everything profiled for Create Wellness is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/create-wellness/](https://apis.io/providers/create-wellness/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Create Wellness UCP Commerce MCP](https://apis.io/apis/create-wellness/create-wellness-ucp-commerce-mcp/) — The Universal Commerce Protocol endpoint served from the Create Wellness storefront, exposed over the Model Context Protocol. Thirteen tools cover catalog…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Create Wellness UCP Commerce MCP](https://apis.io/servers/create-wellness/create-wellness-ucp-commerce-mcp/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Create Wellness Authentication](https://apis.io/security/create-wellness/create-wellness-authentication/)
+- [Create Wellness Domain Security](https://apis.io/security/create-wellness/create-wellness-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Create Wellness Scopes](https://apis.io/scopes/create-wellness/create-wellness-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Create Wellness Plans Pricing](https://apis.io/plans/create-wellness/create-wellness-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Create Wellness Rate Limits](https://apis.io/rate-limits/create-wellness/create-wellness-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://trycreate.co)
+- [Documentation](https://trycreate.co/agents.md)
+- [Support](https://trycreate.co/pages/faq)
+- [Terms of service](https://trycreate.co/policies/terms-of-service)
+- [Privacy policy](https://trycreate.co/policies/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 23.6** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 28.0 |
+| Access clarity | 27.6 |
+
+**Agent readiness 11.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | derived (partial credit) |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+
+**Regulatory alignment 32.8** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/create-wellness/](https://apis.io/providers/create-wellness/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Create Wellness: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/create-wellness/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
